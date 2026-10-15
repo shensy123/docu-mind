@@ -1,0 +1,110 @@
+# =====================================================================
+# 根级白名单（公开仓：只含应用运行所需代码＋工程规范配置）。
+# 机制：先以 /* 忽略根级全部条目，再放行下列清单；AI 工作流、治理规范
+# 文档与本地数据一律不出库（本地保留）：docs/、ai-workflow/、.agents/、
+# .claude/、.mcp.json、_archive/、_drafts/、prompts/、time-tracker/、
+# .zcode/、AGENTS.md、CLAUDE.md 等。
+# =====================================================================
+/*
+!/.gitignore
+!/.gitattributes
+!/.editorconfig
+!/.zcodeignore
+!/README.md
+!/package.json
+!/package-lock.json
+!/commitlint.config.ts
+!/.github/
+!/.husky/
+!/.vscode/
+/.vscode/*
+!/.vscode/extensions.json
+!/frontend/
+!/bff/
+
+# husky 运行时生成物（钩子本体 .husky/pre-commit、.husky/commit-msg 入库）
+.husky/_/
+
+# ===== 白名单目录内部的排除 =====
+
+# bff 运行时数据（SQLite 会话存储，本地保留）
+bff/data/
+
+# bff 侧 AI 协作文档（本地保留，不入公开仓）
+bff/CLAUDE.md
+bff/CLAUDE.zh.md
+
+# 实验残留件（本地保留不入库；对应路由已摘除——2026-10-15 B 类处置）
+frontend/src/views/TestPage/
+frontend/src/views/Chat/
+frontend/src/components/MomentsList.vue
+frontend/src/components/VirtualList.vue
+frontend/src/api/test.ts
+frontend/mock/moments.ts
+frontend/mock/moments-api.ts
+
+# 本地空目录骨架（防未来误入）
+frontend/_archive/
+
+# ===== 通用忽略 =====
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+.DS_Store
+dist
+dist-ssr
+coverage
+*.local
+
+# Editor directories and files
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+*.tsbuildinfo
+
+.eslintcache
+
+# Vitest
+__screenshots__/
+
+# Vite
+*.timestamp-*-*.mjs
+
+# Env files（bff/.env.local 为唯一模型密钥持有处，永不入库）
+.env
+.env.local
+.env.development
+.env.production
+.env.*.local
+
+# 本地草稿目录和文件
+_drafts/
+**/_drafts/
+*.draft.md
+
+# vite-plugin-mock bundle 缓存（防复发，2026-09-08 清理过 21 个）
+frontend/mock/**/*.bundled*.mjs
+
+# ZCode 本地计划文件
+.zcode/
+
+# 会话提示词（session-prompt skill 生成，个人派发数据，仅本地）
+prompts/
+
+# AI 工作流产物专区（按公开仓新规整区不入库）
+ai-workflow/
+
+# 个人时间记录数据
+time-tracker/

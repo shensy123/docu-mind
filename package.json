@@ -1,0 +1,57 @@
+{
+  "name": "docu-mind",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "frontend",
+    "bff"
+  ],
+  "scripts": {
+    "dev": "npm-run-all --parallel dev:frontend dev:bff",
+    "dev:frontend": "npm run dev -w frontend",
+    "dev:bff": "npm run dev -w bff",
+    "dev:mock": "npm run dev:mock -w frontend",
+    "build": "npm run build -w frontend",
+    "build-only": "npm run build-only -w frontend",
+    "preview": "npm run preview -w frontend",
+    "type-check": "npm run type-check -w frontend && npm run type-check -w bff",
+    "test:unit": "npm run test:unit -w frontend",
+    "lint": "npm run lint -w frontend && npm run lint -w bff",
+    "lint:fix": "npm run lint:fix -w frontend && npm run lint:fix -w bff",
+    "format": "npm run format -w frontend",
+    "prepare": "husky install"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20.5.2",
+    "@commitlint/config-conventional": "^20.5.0",
+    "husky": "^8.0.0",
+    "lint-staged": "^16.4.0",
+    "npm-run-all2": "^8.0.4"
+  },
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
+  "lint-staged": {
+    "frontend/**/*.{js,jsx,ts,tsx,vue}": [
+      "eslint --fix --config frontend/eslint.config.ts",
+      "prettier --write"
+    ],
+    "frontend/**/*.{css,scss,sass}": [
+      "stylelint --config frontend/stylelint.config.mjs --fix",
+      "prettier --write"
+    ],
+    "frontend/**/*.{json,md}": [
+      "prettier --write"
+    ],
+    "bff/**/*.{ts,js,mjs,json}": [
+      "prettier --write"
+    ],
+    "*.md": [
+      "prettier --write"
+    ]
+  },
+  "overrides": {
+    "vue": "3.5.32"
+  }
+}

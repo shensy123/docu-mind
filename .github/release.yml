@@ -1,0 +1,17 @@
+# GitHub Release Notes 自动生成分类配置（Release 页点 Generate release notes 时消费）
+# label 对齐仓库默认 label（enhancement / bug / documentation）；Semver-* 为升版标记备用
+changelog:
+  exclude:
+    labels: [ignore-for-release]
+    authors: [dependabot]
+  categories:
+    - title: ⚠ Breaking Changes
+      labels: [Semver-Major, breaking-change]
+    - title: ✨ Features
+      labels: [Semver-Minor, enhancement]
+    - title: 🐛 Fixes
+      labels: [Semver-Patch, bug]
+    - title: 📖 Documentation
+      labels: [documentation]
+    - title: Other Changes
+      labels: ["*"]
