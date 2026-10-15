@@ -1,0 +1,91 @@
+// 全局登录页样式
+.login-page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #0a0e27, #141e30);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+
+  .main-container {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    background: rgb(10 14 39 / 70%);
+    border-radius: 16px;
+    box-shadow: 0 0 50px rgb(0 123 255 / 50%);
+    overflow: hidden;
+    border: 1px solid rgb(64 158 255 / 30%);
+
+    .product-intro {
+      flex: 1;
+      padding: 4rem;
+      color: #fff;
+
+      .product-title {
+        font-size: 2.5rem;
+        margin-bottom: 2rem;
+        background: linear-gradient(90deg, #409eff, #67c23a);
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .product-desc {
+        line-height: 1.8;
+        margin-bottom: 3rem;
+        color: #c0c4cc;
+      }
+
+      .function-buttons {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+
+        .el-button {
+          height: 48px;
+          border-radius: 8px;
+          background: rgb(64 158 255 / 20%);
+          border: 1px solid #409eff;
+        }
+      }
+    }
+
+    .login-form-wrapper {
+      flex: 0 0 450px;
+      padding: 3rem;
+      background: rgb(18 26 56 / 50%);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .footer {
+    margin-top: 2rem;
+    color: #909399;
+    font-size: 0.9rem;
+    text-align: center;
+  }
+}
+
+// 适配移动端
+@media (width <= 768px) {
+  .login-page .main-container {
+    flex-direction: column;
+
+    .product-intro {
+      padding: 2rem;
+
+      .function-buttons {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .login-form-wrapper {
+      flex: 1;
+      width: 100%;
+    }
+  }
+}

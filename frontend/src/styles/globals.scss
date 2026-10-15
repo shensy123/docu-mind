@@ -1,0 +1,47 @@
+// 1. CSS重置/标准化
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+// 2. 根元素样式
+:root {
+  font-family: Inter, system-ui, sans-serif;
+  line-height: 1.6;
+}
+
+// 3. 基础元素样式
+body {
+  background: var(--bg-color);
+  color: var(--text-color);
+  min-height: 100vh;
+}
+
+// 4. 通用工具类
+.text-center {
+  text-align: center;
+}
+
+.flex {
+  display: flex;
+}
+
+.hidden {
+  display: none;
+}
+
+.shadow {
+  box-shadow: var(--el-box-shadow-light);
+}
+
+// 5. 全局动画
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

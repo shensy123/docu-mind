@@ -1,0 +1,26 @@
+// 1. 变量和配置（无依赖）
+@use 'variables.scss' as *;
+@use 'mixins.scss' as *;
+
+// @import 'functions.scss';
+
+// 2. 重置和基础（依赖变量）
+// @import 'reset';
+// @import 'base';
+
+// 3. 工具类（依赖变量和mixins）
+// @import 'utilities/spacing';
+// @import 'utilities/typography';
+// @import 'utilities/layout';
+
+// 4. 组件基础样式
+// @import 'components/buttons';
+// @import 'components/forms';
+// @import 'components/tables';
+
+// 5. 页面特定样式
+// @import 'pages/home';
+// @import 'pages/dashboard';
+
+// 6. 全局样式（最后）
+@use 'globals.scss' as *;

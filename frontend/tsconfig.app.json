@@ -1,0 +1,31 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "include": [
+    "env.d.ts",
+    "src/**/*",
+    "src/**/*.vue",
+    "src/types/auto-imports.d.ts",
+    "src/types/components.d.ts"
+  ],
+  "exclude": ["src/**/__tests__/*"],
+  "compilerOptions": {
+    "types": ["element-plus/global", "@vue/runtime-dom"],
+    // Extra safety for array and object lookups, but may have false positives.
+    "noUncheckedIndexedAccess": true, //注释:启用后，TypeScript 将在访问数组元素或对象属性时进行更严格的类型检查，以确保访问的元素或属性确实存在。这有助于捕获潜在的运行时错误，但可能会导致一些误报，特别是在处理动态数据结构时。
+
+    "strict": true,
+    "noUnusedLocals": true, //检查代码中是否存在未使用的局部变量、参数或函数，并在编译时发出警告。这有助于保持代码的清洁和可维护性，但在某些情况下可能会产生误报，特别是在处理回调函数或事件处理程序时
+    "exactOptionalPropertyTypes": true, //注释：启用后，TypeScript 将在处理可选属性时进行更严格的类型检查，以确保可选属性的类型与对象类型中的属性类型完全匹配。这有助于捕获潜在的运行时错误，但可能会导致一些误报，特别是在处理动态数据结构时。
+    "noImplicitReturns": true, //注释：启用后，TypeScript 将检查函数是否在所有代码路径上都有明确的返回值，并在编译时发出警告。这有助于捕获潜在的运行时错误，但在某些情况下可能会产生误报，特别是在处理回调函数或事件处理程序时。
+
+    "paths": {
+      "@/*": ["./src/*"],
+      "@components/*": ["./src/components/*"],
+      "@store/*": ["./src/store/*"]
+    },
+
+    // `vue-tsc --build` produces a .tsbuildinfo file for incremental type-checking.
+    // Specified here to keep it out of the root directory.
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo"
+  }
+}

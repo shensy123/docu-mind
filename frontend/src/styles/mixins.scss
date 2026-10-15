@@ -1,0 +1,61 @@
+// 响应式 mixin,根据传入的断点参数生成对应的媒体查询
+// 页面中使用 @include respond-to(md) { ... } 来应用样式，{...} 内的样式将在屏幕宽度小于等于 $breakpoint-md 时生效
+// 也可以在样式中直接@include respond-to(md) 来应用样式，适用于需要在多个地方应用相同响应式样式的情况
+@mixin respond-to($breakpoint) {
+  @if $breakpoint == xs {
+    @media (max-width: $breakpoint-xs) {
+      @content;
+    }
+  } @else if $breakpoint == sm {
+    @media (max-width: $breakpoint-sm) {
+      @content;
+    }
+  } @else if $breakpoint == md {
+    @media (max-width: $breakpoint-md) {
+      @content;
+    }
+  } @else if $breakpoint == lg {
+    @media (max-width: $breakpoint-lg) {
+      @content;
+    }
+  } @else if $breakpoint == xl {
+    @media (max-width: $breakpoint-xl) {
+      @content;
+    }
+  }
+}
+
+// 文本溢出省略
+@mixin text-ellipsis($lines: 1) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  @if $lines == 1 {
+    white-space: nowrap;
+  } @else {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+  }
+}
+
+// Flex 布局
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// 滚动视图高度规则(备用):与 BasicScrollContainer 内部规则等价,消费方自包 el-scrollbar 时兜底
+@mixin scroll-view-rule {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: 100%;
+}
