@@ -31,8 +31,16 @@ const constantRoutes: RouteRecordRaw[] = [
 // asyncRoutes: 需要鉴权的路由
 const asyncRoutes: RouteRecordRaw[] = [
   {
+    // 默认落地页(2026-11-05 拍板):Conversation 顶层整页渲染,不套后台 MainLayout;
+    // 后台路由(/home /user /document/* /chat/component /admin /setMenu /setting/*)不变,仅地址栏直达
+    path: '/conversation',
+    name: 'Conversation',
+    component: () => import('@/views/Conversation/CvIndex.vue'),
+    meta: { title: 'Conversation' },
+  },
+  {
     path: '/',
-    redirect: '/home',
+    redirect: '/conversation',
     // component: DocuLayout,
     component: MainLayout,
     children: menuRoutes,

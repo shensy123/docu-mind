@@ -1,6 +1,6 @@
 <!-- 聊天区容器(垂直):标题行 + 消息窗口(CvMessages) + 输入工具条(CvInputTools)。流式编排在 useConversationChat,状态在 store/conversation.ts -->
 <script setup lang="ts">
-import { ChatRound, ChatLineRound } from '@element-plus/icons-vue'
+import { Plus, Clock } from '@element-plus/icons-vue'
 import BasicLayout from '@/components/common/BasicLayout.vue'
 import CvMessages from './CvMessages.vue'
 import CvInputTools from './CvInputTools.vue'
@@ -34,6 +34,7 @@ const modelKey = computed({
 
 const deleteChatMessage = (idx: number) => store.deleteMessage(idx)
 const onTemporaryChat = () => store.onTemporarySession()
+const newSession = () => store.openEmptySession()
 </script>
 
 <template>
@@ -42,10 +43,10 @@ const onTemporaryChat = () => store.onTemporarySession()
       <h1 class="cv-panel__title">{{ title }}</h1>
       <div class="cv-panel__actions">
         <el-tooltip content="临时对话">
-          <el-icon class="cv-panel__action" @click="onTemporaryChat"><ChatRound /></el-icon>
+          <el-icon class="cv-panel__action" @click="onTemporaryChat"><Clock /></el-icon>
         </el-tooltip>
         <el-tooltip content="开启新对话">
-          <el-icon class="cv-panel__action" @click="onTemporaryChat"><ChatLineRound /></el-icon>
+          <el-icon class="cv-panel__action" @click="newSession"><Plus /></el-icon>
         </el-tooltip>
       </div>
     </header>

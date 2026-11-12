@@ -19,9 +19,13 @@ const emit = defineEmits<{ send: []; 'stop-streaming': [] }>()
 const inputText = defineModel<string>('inputText', { default: '' })
 const modelKey = defineModel<string>('modelKey', { default: '' })
 
-// 扩展预留:＋ 展开上传入口区、语音进入收音态(空组件占位,后续步骤实现)
+// 扩展预留:＋/语音暂未实现,点击 toast 提示"待开发"避免无反馈;
+// 入口组件与 v-show 结构保留(uploadOpen/recording 恒 false),后续步骤接入真实交互时替换 onUpload/onVoice
 const uploadOpen = ref(false)
 const recording = ref(false)
+
+const onUpload = () => ElMessage.info('上传功能待开发')
+const onVoice = () => ElMessage.info('语音功能待开发')
 </script>
 
 <template>
@@ -29,8 +33,8 @@ const recording = ref(false)
     <cv-upload-entry v-show="uploadOpen" class="cv-input-tools__extend" />
     <cv-voice-recorder v-show="recording" class="cv-input-tools__extend" />
     <div class="cv-input-tools__row">
-      <el-icon class="cv-input-tools__tool" @click="uploadOpen = !uploadOpen"><Plus /></el-icon>
-      <el-icon class="cv-input-tools__tool" @click="recording = !recording"><Microphone /></el-icon>
+      <el-icon class="cv-input-tools__tool" @click="onUpload"><Plus /></el-icon>
+      <el-icon class="cv-input-tools__tool" @click="onVoice"><Microphone /></el-icon>
       <el-input
         v-model="inputText"
         type="text"

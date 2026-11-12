@@ -1,7 +1,8 @@
-<!-- 会话菜单:新建/删除所有 + 会话列表。状态直接读写 store/conversation.ts(受控 v-for,不用 VMenuList) -->
+<!-- 会话菜单:会话列表(新建入口在 CvPanel 头部/CvSidebar 折叠栏,删除所有在 CvSetting 底栏)。状态直接读写 store/conversation.ts(受控 v-for,不用 VMenuList) -->
 <script setup lang="ts">
-import { Plus, Delete, Edit, Close } from '@element-plus/icons-vue'
+import { Edit, Close } from '@element-plus/icons-vue'
 import { ElMessageBox } from 'element-plus' // ElMessageBox 不在 auto-import 生效集(见 ChatList.vue 同款显式引入)
+import 'element-plus/es/components/message-box/style/css' // 显式引入绕过 unplugin 解析,须手动补按需样式,否则弹窗 overlay 定位 CSS 缺失、弹窗渲染在页面底部
 import type { BasicSession } from '@/types/chat'
 import BasicLayout from '@/components/common/BasicLayout.vue'
 import BasicScrollContainer from '@/components/common/BasicScrollContainer.vue'
@@ -14,14 +15,6 @@ const formatTime = (time?: Date) => {
   const date = new Date(time)
   const pad = (n: number) => String(n).padStart(2, '0')
   return `${date.getMonth() + 1}/${date.getDate()} ${pad(date.getHours())}:${pad(date.getMinutes())}`
-}
-
-const newSession = () => store.openEmptySession()
-
-const deleteAllSession = () => {
-  ElMessageBox.confirm('确定要删除所有会话吗?', '删除所有会话', { type: 'warning' })
-    .then(() => store.deleteAllSessions())
-    .catch(() => {})
 }
 
 const openSession = (id: string) => store.openSession(id)
@@ -43,11 +36,9 @@ const removeSession = (id: string) => {
 
 <template>
   <basic-layout direction="vertical">
-    <div class="cv-menu__ops">
-      <el-button :icon="Plus" @click="newSession">开启新对话</el-button>
-      <el-button :icon="Delete" @click="deleteAllSession">删除所有会话</el-button>
-    </div>
     <basic-scroll-container class="cv-menu__list">
+      <!-- 空态:会话列表为空时给出提示,避免空白区 -->
+      <div v-if="store.sessionList.length === 0" class="cv-menu__empty">暂无会话内容</div>
       <div
         v-for="session in store.sessionList"
         :key="session.id"
@@ -74,14 +65,11 @@ const removeSession = (id: string) => {
 
 <style scoped lang="scss">
 .cv-menu {
-  &__ops {
-    display: flex;
-    gap: 8px;
-    margin-bottom: 12px;
-
-    .el-button {
-      flex: 1;
-    }
+  &__empty {
+    padding: 24px 0;
+    font-size: 14px;
+    color: var(--el-text-color-secondary);
+    text-align: center;
   }
 
   &__item {

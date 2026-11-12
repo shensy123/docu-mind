@@ -2,8 +2,8 @@ import { ref, computed } from 'vue'
 import { AI_MODEL_LIST, type AiModelItem } from '@/types/chat/aiModel'
 
 export function useAiModel(modelKey?: string) {
-  // 当前选中模型key，默认qwen-turbo
-  const currentModelKey = ref<string>(modelKey || 'qwen-turbo')
+  // 当前选中模型key，默认qwen3.8-flash
+  const currentModelKey = ref<string>(modelKey || 'qwen3.8-flash')
 
   // 自动获取当前完整模型对象
   const currentModel = computed<AiModelItem | undefined>(() => {

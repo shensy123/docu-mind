@@ -14,7 +14,7 @@ export interface StreamCallbacks {
 export async function chatQwenStream(
   messages: ChatMessage[],
   callbacks: StreamCallbacks,
-  model = 'qwen-turbo',
+  model = 'qwen3.8-flash',
   signal: AbortSignal
 ) {
   const { onToken, onReasoning, onComplete, onError } = callbacks
