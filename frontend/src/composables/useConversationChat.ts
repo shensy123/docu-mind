@@ -4,11 +4,16 @@
 // 约束:abortController 生命周期封闭于本层,onScopeDispose 自动中止在途请求;组件只消费返回的 api
 import type { ChatMessage, SessionItem } from '@/types/chat'
 import { chatQwenStream } from '@/api/chat'
+import { resolveModelRouting } from '@/composables/useAiModel'
 import { useConversationStore } from '@/store/conversation'
+import { useProviderStore } from '@/store/provider'
 
 const systemMessage: ChatMessage = { role: 'assistant', content: '你是一位乐于助人的助手。' }
 
 export function useConversationChat(store: ReturnType<typeof useConversationStore>) {
+  // 访客自配供应商(批3):当前模型为访客模型时随请求透传,内置模型 passthrough=null 走 env 默认(零回归)
+  const providerStore = useProviderStore()
+
   const inputText = ref('')
   const isStreaming = ref(false)
   const streamText = ref('')
@@ -75,7 +80,15 @@ export function useConversationChat(store: ReturnType<typeof useConversationStor
     }
 
     abortController = new AbortController()
-    await chatQwenStream(requestMessages, callbacks, store.currentModelKey, abortController.signal)
+    // 复合 key 解析:访客模型→真实模型 id + 透传三元组;内置模型原样(请求形态与改造前一致)
+    const routing = resolveModelRouting(store.currentModelKey, providerStore.providers)
+    await chatQwenStream(
+      requestMessages,
+      callbacks,
+      routing.modelKey,
+      abortController.signal,
+      routing.passthrough
+    )
     replayMessage.time = new Date()
     return replayMessage
   }

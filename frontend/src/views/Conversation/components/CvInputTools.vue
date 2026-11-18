@@ -44,7 +44,12 @@ const onVoice = () => ElMessage.info('语音功能待开发')
         :disabled="isStreaming"
         @keyup.enter="emit('send')"
       />
-      <el-select v-model="modelKey" class="cv-input-tools__model" placeholder="选择AI模型">
+      <el-select
+        v-model="modelKey"
+        class="cv-input-tools__model"
+        placeholder="选择AI模型"
+        filterable
+      >
         <el-option
           v-for="item in modelList"
           :key="item.modelKey"

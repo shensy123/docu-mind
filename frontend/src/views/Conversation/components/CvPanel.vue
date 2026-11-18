@@ -9,7 +9,7 @@ import { useAiModel } from '@/composables/useAiModel'
 import { useConversationChat } from '@/composables/useConversationChat'
 
 const store = useConversationStore()
-const { AI_MODEL_LIST } = useAiModel()
+const { modelList } = useAiModel()
 
 const {
   inputText,
@@ -24,8 +24,9 @@ const {
 
 const messages = computed(() => store.currentSession.messages || [])
 const title = computed(() => store.currentSession.title || '新会话（New Chat Session）')
+// 问候语只在内置出厂模型上定义;访客自配模型无 greeting,回落空串(消息窗口按空处理)
 const greeting = computed(
-  () => AI_MODEL_LIST.find(item => item.modelKey === store.currentModelKey)?.greeting || ''
+  () => modelList.value.find(item => item.modelKey === store.currentModelKey)?.greeting || ''
 )
 const modelKey = computed({
   get: () => store.currentModelKey,
@@ -64,7 +65,7 @@ const newSession = () => store.openEmptySession()
       v-model:input-text="inputText"
       v-model:model-key="modelKey"
       :is-streaming="isStreaming"
-      :model-list="AI_MODEL_LIST"
+      :model-list="modelList"
       @send="sendMessage"
       @stop-streaming="stopStreaming"
     />

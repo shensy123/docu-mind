@@ -6,8 +6,10 @@ import 'element-plus/es/components/message-box/style/css' // 显式引入绕过 
 import { useConversationStore } from '@/store/conversation'
 
 const store = useConversationStore()
+const router = useRouter()
 
-const openSetting = () => ElMessage.info('打开设置：待开发')
+// 批3(2026-11-18):设置入口接 AI 供应商设置页(顶层路由,不依赖 /setting 的 SettingLayout)
+const openSetting = () => router.push('/ai-provider')
 
 const deleteAllSession = () => {
   ElMessageBox.confirm('确定要删除所有会话吗?', '删除所有会话', { type: 'warning' })

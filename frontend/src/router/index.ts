@@ -39,6 +39,14 @@ const asyncRoutes: RouteRecordRaw[] = [
     meta: { title: 'Conversation' },
   },
   {
+    // AI 供应商设置(批3 MVP 2026-11-18):顶层整页,同 /conversation 惯例;
+    // 不挂 /setting 子路由——SettingLayout 现无 router-view,子路由无法渲染(现状疑点,见批3回执)
+    path: '/ai-provider',
+    name: 'AiProvider',
+    component: () => import('@/views/DocuSetting/AiProvider.vue'),
+    meta: { title: 'AI 供应商设置' },
+  },
+  {
     path: '/',
     redirect: '/conversation',
     // component: DocuLayout,
