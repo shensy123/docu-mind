@@ -34,12 +34,14 @@ npm run dev        # ts-node index.ts，监听 :3000
 
 ## 🔑 环境变量（`bff/.env.local`）
 
-| 变量                                           | 说明                   |
-| ---------------------------------------------- | ---------------------- |
-| `PORT`                                         | 服务端口（默认 3000）  |
-| `DASHSCOPE_API_BASE_URL` / `DASHSCOPE_API_KEY` | 通义千问（阿里云百炼） |
-| `DEEPSEEK_API_BASE_URL` / `DEEPSEEK_API_KEY`   | DeepSeek（已接线）     |
-| `DOUBAO_API_BASE_URL` / `DOUBAO_API_KEY`       | 豆包（已接线）         |
+| 变量                                           | 说明                                                                                                                        |
+| ---------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| `PORT`                                         | 服务端口（默认 3000）                                                                                                       |
+| `DASHSCOPE_API_BASE_URL` / `DASHSCOPE_API_KEY` | 百炼统一渠道：千问 3.8/3.7 系、DeepSeek-V4 系、Kimi、GLM、MiniMax 共 10 模型（2026-11-05 轮换，各 100 万 Token 限免 90 天） |
+| `DEEPSEEK_API_BASE_URL` / `DEEPSEEK_API_KEY`   | DeepSeek 独立渠道（存量保留，默认不进前端下拉）                                                                             |
+| `DOUBAO_API_BASE_URL` / `DOUBAO_API_KEY`       | 豆包独立渠道（存量保留，默认不进前端下拉）                                                                                  |
+
+> 模型轮换说明（2026-11-05）：旧代 `qwen-turbo`/`qwen-max` 退出前端下拉、后端保留兼容（历史会话 modelKey 防错）；默认模型 `qwen3.8-flash`；第三方模型经百炼聚合渠道调用，复用 `DASHSCOPE_API_KEY`。
 
 由 `src/api/chat.ts` 的 `dotenv.config({ path: '.env.local' })` 加载（依赖 cwd=bff/，npm workspace 脚本已保证）。文件含真实密钥，**不提交**（已被 .gitignore 忽略）。
 

@@ -6,6 +6,7 @@ import express from "express";
 import cors from "cors";
 // import dotenv from "dotenv";
 import { chatQwenStream } from "./src/api/chat.ts";
+import { listModels } from "./src/api/models.ts";
 import sessionsRouter from "./src/api/sessions.ts";
 
 // dotenv.config();
@@ -43,6 +44,9 @@ app.use(
 
 // POST /chat/qwen/stream - SSE 流式聊天（前端唯一聊天通道）
 app.post("/chat/qwen/stream", chatQwenStream);
+
+// POST /chat/models - 访客供应商模型列表中转（批3 MVP「获取模型列表/测试连接」，钥匙只过内存不落盘）
+app.post("/chat/models", listModels);
 
 // /sessions - 会话存储（方案三后端实现，见 src/api/sessions.ts + src/db.ts）
 app.use("/sessions", sessionsRouter);

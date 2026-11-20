@@ -13,6 +13,7 @@
 !/README.md
 !/package.json
 !/package-lock.json
+!/vercel.json
 !/commitlint.config.ts
 !/.github/
 !/.husky/
@@ -108,3 +109,6 @@ ai-workflow/
 
 # 个人时间记录数据
 time-tracker/
+# vercel 本地部署产物与环境文件
+.vercel
+.env*

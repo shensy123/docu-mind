@@ -31,8 +31,24 @@ const constantRoutes: RouteRecordRaw[] = [
 // asyncRoutes: 需要鉴权的路由
 const asyncRoutes: RouteRecordRaw[] = [
   {
+    // 默认落地页(2026-11-05 拍板):Conversation 顶层整页渲染,不套后台 MainLayout;
+    // 后台路由(/home /user /document/* /chat/component /admin /setMenu /setting/*)不变,仅地址栏直达
+    path: '/conversation',
+    name: 'Conversation',
+    component: () => import('@/views/Conversation/CvIndex.vue'),
+    meta: { title: 'Conversation' },
+  },
+  {
+    // AI 供应商设置(批3 MVP 2026-11-18):顶层整页,同 /conversation 惯例;
+    // 不挂 /setting 子路由——SettingLayout 现无 router-view,子路由无法渲染(现状疑点,见批3回执)
+    path: '/ai-provider',
+    name: 'AiProvider',
+    component: () => import('@/views/DocuSetting/AiProvider.vue'),
+    meta: { title: 'AI 供应商设置' },
+  },
+  {
     path: '/',
-    redirect: '/home',
+    redirect: '/conversation',
     // component: DocuLayout,
     component: MainLayout,
     children: menuRoutes,

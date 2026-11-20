@@ -61,14 +61,15 @@ export default defineConfig({
     // host: true, // 设置为 true 可以让服务器监听所有地址，包括 localhost 和公网 IP
     // open: true, // 启动后自动打开浏览器,
     proxy: {
-      // 聊天请求转发到本地 bff（生产环境同域部署无需此代理）
+      // bff 代理目标默认 3000;本机 3000 被其他项目占用时可用 BFF_PROXY_ORIGIN 覆盖(如 http://localhost:3100),
+      // 默认值与 bff PORT 约定绑定,勿单独改动
       '/chat': {
-        target: 'http://localhost:3000',
+        target: process.env.BFF_PROXY_ORIGIN || 'http://localhost:3000',
         changeOrigin: true,
       },
       // axios baseURL /api 的请求转发到本地 bff 并剥离 /api 前缀（会话存储等 REST 端点）
       '/api': {
-        target: 'http://localhost:3000',
+        target: process.env.BFF_PROXY_ORIGIN || 'http://localhost:3000',
         changeOrigin: true,
         rewrite: path => path.replace(/^\/api/, ''),
       },

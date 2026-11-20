@@ -2,6 +2,8 @@
 
 AI 智能文档问答助手 monorepo（frontend + bff）。
 
+> 在线 Demo（前端静态演示版）：https://docu-mind-demo.vercel.app ——AI 对话与流式输出需本地运行 BFF（`npm install && npm run dev`，详见下文）；线上版用于界面与交互演示。
+
 > 状态：WIP（开发中）。`lint` / `build` / 单元测试当前全绿；`type-check` 余 8 条 element-plus 2.13 + vue-tsc 的模板 prop 类型解析误报（标准用法、运行时正常）。
 
 ## 仓库结构

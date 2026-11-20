@@ -11,7 +11,7 @@ const { getSession, setSession, destroySession } = useSession()
 export const useConversationStore = defineStore('conversation', () => {
   const sessionList = ref<BasicSession[]>(getSessionList() || [])
   const currentSession = ref<SessionItem>({} as SessionItem)
-  const currentModelKey = ref<string>('qwen-turbo')
+  const currentModelKey = ref<string>('qwen3.8-flash')
   const isTemporary = ref<boolean>(false)
 
   // 无会话 id(空/临时态)时不写 localStorage,避免 chat_session_item_undefined 键
@@ -22,13 +22,15 @@ export const useConversationStore = defineStore('conversation', () => {
   const openEmptySession = () => {
     if (!currentSession.value.id) return
     currentSession.value = {} as SessionItem
-    currentModelKey.value = 'qwen-turbo'
+    currentModelKey.value = 'qwen3.8-flash'
+    isTemporary.value = false // 2026-11-05 修复：临时标记无重置点，开新会话后残留 true 导致新会话被误标
   }
 
   const openSession = (id: string) => {
     const session = getSession(id)
     currentSession.value = session || ({} as SessionItem)
-    currentModelKey.value = session?.modelKey || 'qwen-turbo'
+    currentModelKey.value = session?.modelKey || 'qwen3.8-flash'
+    isTemporary.value = false // 打开既有会话即离开临时态（2026-11-05）
   }
 
   const updateSessionName = (id: string, name: string) => {
@@ -64,7 +66,7 @@ export const useConversationStore = defineStore('conversation', () => {
 
     sessionList.value = []
     currentSession.value = {} as SessionItem
-    currentModelKey.value = 'qwen-turbo'
+    currentModelKey.value = 'qwen3.8-flash'
 
     ElMessage({ type: 'success', message: '全部删除成功' })
   }
