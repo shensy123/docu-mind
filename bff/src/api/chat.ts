@@ -6,6 +6,7 @@
 
 import { type Request, type Response } from "express";
 import OpenAI from "openai";
+import { classifyUpstreamError } from "./upstreamError.ts";
 
 import dotenv from "dotenv";
 // 注意：相对路径依赖 cwd=bff/（npm workspace 脚本已保证，勿从其他目录直接启动）
@@ -135,10 +136,13 @@ export const chatQwenStream = async (req: Request, res: Response) => {
       res.end();
     }
   } catch (error: unknown) {
-    console.error("流式调用错误:", error);
-    const message = error instanceof Error ? error.message : "AI 服务异常";
+    // D1(批3.5):分级回传,前端优先消费 hint(人话),fallback 时展示原文;日志只打 message 不打整个 error 对象
+    const info = classifyUpstreamError(error);
+    console.error("流式调用错误:", info.message, `(kind=${info.kind})`);
     if (!closed) {
-      res.write(`data: ${JSON.stringify({ type: "error", error: message })}\n\n`);
+      res.write(
+        `data: ${JSON.stringify({ type: "error", error: info.message, kind: info.kind, hint: info.hint })}\n\n`,
+      );
       res.end();
     }
   }

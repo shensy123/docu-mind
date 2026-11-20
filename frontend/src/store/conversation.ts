@@ -4,11 +4,14 @@
 // 两者曾共用同一套 localStorage key(chat_session_*),归档后本 store 是唯一读写方。
 import type { BasicSession, ChatMessage, SessionItem } from '@/types/chat'
 import { useSessionList, useSession } from '@/composables/useChatSession'
+import { useAiModel } from '@/composables/useAiModel'
 
 const { getSessionList, setSessionList, destroySessionList } = useSessionList()
 const { getSession, setSession, destroySession } = useSession()
 
 export const useConversationStore = defineStore('conversation', () => {
+  // U8(批3.5):toast 展示人类可读 label(「供应商名｜模型展示名」),内部复合键 custom:xxx:yyy 不再出现在文案
+  const { modelList } = useAiModel()
   const sessionList = ref<BasicSession[]>(getSessionList() || [])
   const currentSession = ref<SessionItem>({} as SessionItem)
   const currentModelKey = ref<string>('qwen3.8-flash')
@@ -91,7 +94,8 @@ export const useConversationStore = defineStore('conversation', () => {
     currentSession.value.modelKey = modelKey
 
     persistCurrent()
-    ElMessage({ type: 'success', message: `已切换模型：${modelKey}` })
+    const label = modelList.value.find(item => item.modelKey === modelKey)?.label
+    ElMessage({ type: 'success', message: `已切换模型：${label || modelKey}` })
   }
 
   const addMessage = (message: ChatMessage) => {

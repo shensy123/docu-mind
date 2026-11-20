@@ -49,7 +49,8 @@ export const useProviderStore = defineStore('provider', () => {
     persist()
   }
 
-  const generateProviderId = () => Math.random().toString(36).slice(2, 9)
+  // A5(批3.5):UUID 消除 7 位随机短 id 的碰撞面(旧存量 id 不迁移,新旧共存按各自形态路由)
+  const generateProviderId = () => crypto.randomUUID()
 
   return {
     providers,
