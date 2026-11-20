@@ -42,8 +42,8 @@ app.use(
   },
 );
 
-// POST /chat/qwen/stream - SSE 流式聊天（前端唯一聊天通道）
-app.post("/chat/qwen/stream", chatQwenStream);
+// POST /chat/stream - SSE 流式聊天（前端唯一聊天通道；2026-11-20 批3.5 U1 由 /chat/qwen/stream 改名，清理历史 qwen 命名债）
+app.post("/chat/stream", chatQwenStream);
 
 // POST /chat/models - 访客供应商模型列表中转（批3 MVP「获取模型列表/测试连接」，钥匙只过内存不落盘）
 app.post("/chat/models", listModels);

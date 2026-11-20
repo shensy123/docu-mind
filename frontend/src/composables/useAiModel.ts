@@ -40,7 +40,8 @@ export const resolveModelRouting = (
   const provider = providers.find(
     item => item.id === providerId && item.enabled && item.models.some(m => m.id === modelId)
   )
-  if (!provider) return { modelKey, passthrough: null }
+  // modelId 缺段(畸形复合键)与供应商不可用同判:回落内置默认路径
+  if (!provider || !modelId) return { modelKey, passthrough: null }
 
   return {
     modelKey: modelId,
